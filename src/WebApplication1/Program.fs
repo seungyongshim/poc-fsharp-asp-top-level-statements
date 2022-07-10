@@ -2,10 +2,14 @@ open Microsoft.AspNetCore.Builder
 open Giraffe
 
 let webApp = choose [
-    route "/" >=> text "Hello world"
+    route "/" >=> json "Hello world" 
 ]
 
-let app = WebApplication.Create()
+let builder = WebApplication.CreateBuilder()
+builder.Services.AddGiraffe() |> ignore
+
+let app = builder.Build()
 app.UseGiraffe webApp
 
 app.Run()
+
